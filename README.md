@@ -45,6 +45,8 @@ First, create your base HTML form structure that matches your design requirement
 2. Create a new form
 3. Add fields that correspond to your HTML form
 
+![Alt text]([image_url](https://github.com/yadnyeshkolte/static-contact-section/blob/develop/resources/googleform.png))
+
 ### 3. Get Field IDs from Google Form
 
 To map your form fields to Google Form fields:
