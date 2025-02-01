@@ -45,7 +45,7 @@ First, create your base HTML form structure that matches your design requirement
 2. Create a new form
 3. Add fields that correspond to your HTML form
 
-![Alt text]([image_url](https://github.com/yadnyeshkolte/static-contact-section/blob/develop/resources/googleform.png))
+![Google Form](resources/googleform.png)
 
 ### 3. Get Field IDs from Google Form
 
@@ -143,6 +143,158 @@ document.getElementById('contactForm').addEventListener('submit', function() {
     margin-bottom: 1rem;
 }
 ```
+#### Example Contact form, CSS is in ContactSection.css
+
+![Google Form](resources/contact-page.png)
+![Google Form](resources/submit.png)
+![Google Form](resources/submitted.png)
+![Google Form](resources/googlesheet.png)
+
+## Extended Setting Up Email Notifications
+
+### Step 1: Access Google Apps Script
+1. Open your Google Form responses spreadsheet
+2. Click on "Extensions" in the top menu
+3. Select "Apps Script"
+
+### Step 2: Add the Notification Script
+1. In the Apps Script editor, replace any existing code with this script:
+
+```javascript
+function sendEmailNotification(e) {
+  try {
+    // Get the active spreadsheet
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) {
+      Logger.log('Could not find active spreadsheet');
+      return;
+    }
+
+    // List all sheets and their names for debugging
+    const sheets = ss.getSheets();
+    Logger.log('Available sheets:');
+    sheets.forEach(sheet => Logger.log(sheet.getName()));
+
+    // Get the first sheet if name doesn't match
+    const sheet = ss.getSheetByName('react-static-site-contact-section (Responses)') || ss.getSheets()[0];
+    if (!sheet) {
+      Logger.log('Could not find any sheets');
+      return;
+    }
+
+    Logger.log('Using sheet: ' + sheet.getName());
+
+    // Get the last row with data
+    const lastRow = sheet.getLastRow();
+    if (lastRow <= 1) {
+      Logger.log('No data found in sheet');
+      return;
+    }
+
+    // Get the last row's data
+    const lastRowData = sheet.getRange(lastRow, 1, 1, sheet.getLastColumn()).getValues()[0];
+
+    // Extract data from the last submission
+    const timestamp = lastRowData[0];
+    const name = lastRowData[1];
+    const email = lastRowData[2];
+    const message = lastRowData[3];
+
+    // Create email content
+    const emailSubject = 'New Contact Form Submission';
+    const emailBody = `
+      New contact form submission received:
+      
+      Timestamp: ${timestamp}
+      Name: ${name}
+      Email: ${email}
+      Message: ${message}
+      
+      This is an automated notification.
+    `;
+
+    // Send email to your address
+    const YOUR_EMAIL = 'example@example.com'; // Replace with your email address
+    MailApp.sendEmail(YOUR_EMAIL, emailSubject, emailBody);
+    Logger.log('Email sent successfully');
+
+  } catch (error) {
+    Logger.log('Error in sendEmailNotification: ' + error.toString());
+    throw error;
+  }
+}
+
+// Function to create trigger
+function createFormTrigger() {
+  try {
+    // Delete existing triggers to avoid duplicates
+    const triggers = ScriptApp.getProjectTriggers();
+    triggers.forEach(trigger => ScriptApp.deleteTrigger(trigger));
+
+    // Create new trigger to run on form submit
+    ScriptApp.newTrigger('sendEmailNotification')
+      .forSpreadsheet(SpreadsheetApp.getActive())
+      .onFormSubmit()
+      .create();
+    
+    Logger.log('Trigger created successfully');
+  } catch (error) {
+    Logger.log('Error in createFormTrigger: ' + error.toString());
+    throw error;
+  }
+}
+
+// Test function to manually run the notification
+function testEmailNotification() {
+  sendEmailNotification();
+  Logger.log('Test completed');
+}
+```
+
+### Step 3: Configure the Script
+1. Replace `'your.email@example.com'` with the email address where you want to receive notifications
+2. Save the script by clicking the disk icon or pressing Ctrl/Cmd + S
+
+### Step 4: Set Up Authorization
+1. Click the "Run" button to run the `createFormTrigger` function
+2. Google will prompt you to authorize the script
+3. Click "Review Permissions"
+4. Select your Google account
+5. Click "Advanced" and then "Go to [Your Project Name] (unsafe)"
+6. Click "Allow"
+
+### Step 5: Test the Setup
+1. In the Apps Script editor, select `testEmailNotification` from the function dropdown
+2. Click the "Run" button
+3. Check your email to confirm you received the test notification
+4. Submit a test response through your contact form
+5. Verify that you receive the email notification
+
+![Google Form](resources/trigger.png)
+
+### Received Email
+
+![Google Form](resources/email.png)
+
+## Troubleshooting
+
+### Common Issues and Solutions:
+
+1. **No Email Notifications**
+   - Check if the trigger is set up: View -> Triggers in Apps Script
+   - Verify your email address is correct in the code
+   - Check the Apps Script execution logs for errors
+
+2. **Authorization Errors**
+   - Make sure you completed the authorization process
+   - Check if you have permission to use Gmail services
+   - Try running the test function again
+
+3. **Script Errors**
+   - View the execution log in Apps Script
+   - Verify the spreadsheet is still connected to the form
+   - Check if column numbers match your form fields
+  
 
 ## Important Considerations
 
@@ -163,24 +315,6 @@ document.getElementById('contactForm').addEventListener('submit', function() {
 3. Add loading states for better UX
 4. Test thoroughly across browsers
 5. Consider accessibility features
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Form Redirects to Google Forms**
-   - Check iframe implementation
-   - Verify `target="hidden_iframe"`
-   - Ensure form action ends with "formResponse?"
-
-2. **Submissions Not Recording**
-   - Verify field IDs match exactly
-   - Check Google Form is accepting responses
-   - Ensure form is public
-
-3. **CORS Issues**
-   - Add `mode: 'no-cors'` if using fetch
-   - Check browser console for errors
 
 ## Advanced Customization
 
