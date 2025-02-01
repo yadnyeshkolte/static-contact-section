@@ -1,5 +1,4 @@
 .contact-container {
-    min-height: 100vh;
     min-height: 100dvh; /* For mobile browsers */
     background: linear-gradient(to bottom, #EEF2FF, #FFFFFF);
     display: flex;
