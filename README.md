@@ -148,6 +148,7 @@ document.getElementById('contactForm').addEventListener('submit', function() {
 ![Google Form](resources/contact-page.png)
 ![Google Form](resources/submit.png)
 ![Google Form](resources/submitted.png)
+![Google Form](resources/googlesheet.png)
 
 ## Extended Setting Up Email Notifications
 
