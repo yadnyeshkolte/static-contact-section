@@ -12,7 +12,6 @@
 .contact-container.dark {
     background: linear-gradient(to bottom, #1F2937, #111827);
 }
-
 .form-wrapper {
     max-width: 42rem;
     width: 100%;
@@ -225,8 +224,11 @@
     height: 1rem;
 }
 
-.success-container {
-    text-align: center;
+.contact-container.success-container {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .success-content {
@@ -235,6 +237,13 @@
     border-radius: 0.75rem;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-width: 20rem;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .dark .success-content {
@@ -273,13 +282,14 @@
 }
 
 @media (max-width: 640px) {
-    .contact-container {
+    .contact-container,
+    .contact-container.success-container {
         padding: 1rem;
-        height: auto;
-        min-height: 100dvh;
-        align-items: flex-start; /* Align to top on mobile */
     }
 
+    .success-content {
+        padding: 1.25rem;
+    }
     .form-content {
         padding: 1.5rem;
         margin: 0.5rem 0;
@@ -297,14 +307,19 @@
     .form-group textarea {
         min-height: 10rem; /* Slightly smaller on mobile */
     }
+    .success-container {
+        padding: 1rem;
+        min-height: 100dvh;
+        align-items: center; /* Keep center alignment even on mobile */
+    }
 }
 
 @media (max-height: 800px) {
-    .contact-container {
-        align-items: flex-start;
+    .contact-container,
+    .contact-container.success-container {
+        align-items: center;
         padding: 1.5rem 1rem;
     }
-
     .form-group textarea {
         min-height: 8rem; /* Smaller textarea for shorter screens */
     }
