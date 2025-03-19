@@ -45,7 +45,7 @@ First, create your base HTML form structure that matches your design requirement
 2. Create a new form
 3. Add fields that correspond to your HTML form
 
-![Google Form](resources/googleform.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/googleform.png)
 
 ### 3. Get Field IDs from Google Form
 
@@ -145,10 +145,10 @@ document.getElementById('contactForm').addEventListener('submit', function() {
 ```
 #### Example Contact form, CSS is in ContactSection.css
 
-![Google Form](resources/contact-page.png)
-![Google Form](resources/submit.png)
-![Google Form](resources/submitted.png)
-![Google Form](resources/googlesheet.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/contact-page.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/submit.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/submitted.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/googlesheet.png)
 
 ## Extended Setting Up Email Notifications
 
@@ -270,11 +270,11 @@ function testEmailNotification() {
 4. Submit a test response through your contact form
 5. Verify that you receive the email notification
 
-![Google Form](resources/trigger.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/trigger.png)
 
 ### Received Email
 
-![Google Form](resources/email.png)
+![Google Form](https://raw.githubusercontent.com/yadnyeshkolte/static-contact-section/refs/heads/main/resources/email.png)
 
 ## Troubleshooting
 
